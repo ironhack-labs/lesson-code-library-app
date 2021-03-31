@@ -2,6 +2,20 @@ const router = require("express").Router();
 
 const Book = require("../models/Book.model.js"); // <== add this line before your routes
 
+// GET route to display the form
+router.get("/books/create", (req, res) => res.render("books/book-create.hbs"));
+
+// POST route to save a new book to the database in the books collection
+router.post("/books/create", (req, res, next) => {
+  // console.log(req.body);
+  const { title, author, description, rating } = req.body;
+
+  Book.create({ title, author, description, rating })
+    // .then(bookFromDB => console.log(`New book created: ${bookFromDB.title}.`))
+    .then(() => res.redirect("/books"))
+    .catch((error) => next(error));
+});
+
 // GET route to retrieve and display all the books
 router.get("/books", (req, res, next) => {
   Book.find()
@@ -21,7 +35,7 @@ router.get("/books", (req, res, next) => {
 });
 
 // GET route to retrieve and display details of a specific book
-router.get("/books/:bookId", (req, res) => {
+router.get("/books/:bookId", (req, res, next) => {
   const { bookId } = req.params;
 
   Book.findById(bookId)
