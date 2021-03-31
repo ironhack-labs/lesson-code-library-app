@@ -10,5 +10,11 @@ we can iterate over it here with #each--}}
     <h3>{{title}}</h3>
     <p>By: {{author}}</p> {{!-- additional book property --}}
     <a href="/books/{{_id}}">See details</a> {{!-- link that points to the details page --}}
+    <a href="/books/{{_id}}/edit">Edit</a> {{!-- link to redirect to the edit form for each specific book  --}}
+
+    {{!-- add the form to handle the POST request to remove a specific book  --}}
+    <form action="/books/{{_id}}/delete" method="POST">
+      <button>Delete</button>
+    </form>
   </div>
 {{/each}}
